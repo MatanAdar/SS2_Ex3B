@@ -9,7 +9,7 @@ namespace ariel{
 
     Fraction::Fraction(){
 
-        cout << getNumerator() << "/" << getDenominator() << endl;
+        // cout << getNumerator() << "/" << getDenominator() << endl;
     }
 
     Fraction::Fraction(int n, int d) : numerator(n),denominator(d){
@@ -301,11 +301,31 @@ namespace ariel{
 
 
     std::ostream& operator<< (std::ostream& output, const Fraction& fraction){
-        cout << fraction.numerator << "/" << fraction.denominator;
-        return cout;
+        output << fraction.numerator << "/" << fraction.denominator;
+        return output;
     }
 
     std::istream& operator>>(std::istream& input, Fraction& fraction){
+
+        int numerator;
+        int denominator;
+        char slash_in_input;
+
+        input >> numerator;
+
+        input >> slash_in_input;
+
+        input >> denominator;
+
+        if(slash_in_input == '/'  &&  denominator != 0){
+
+            fraction.setNumerator(numerator);
+            fraction.setDenominator(denominator);
+        }
+        else{
+            throw std::runtime_error("Input isnt valid");
+        }
+
         return input;
     }
 

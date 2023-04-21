@@ -18,19 +18,32 @@ TEST_CASE("Checking set function change the Fraction"){
 
     Fraction a(2,5);
 
-    CHECK(a == 2/5);
+    CHECK(a.getNumerator() == 2);
+    CHECK(a.getDenominator() == 5);
 
     a.setNumerator(4);
 
-    CHECK(a == 4/5);
+    CHECK(a.getNumerator() == 4);
+    CHECK(a.getDenominator() == 5);
 
     a.setDenominator(7);
 
-    CHECK(a == 4/7);
+    CHECK(a.getNumerator() == 4);
+    CHECK(a.getDenominator() == 7);
 
     a.setDenominator(6);
 
-    CHECK(a == 2/3);
+    //fraction reduced because 4/6 can be reduced to 2/3
+    CHECK(a.getNumerator() == 2);
+    CHECK(a.getDenominator() == 3);
+
+    a.setNumerator(0);
+
+    CHECK(a.getNumerator() == 0);
+    CHECK(a.getDenominator() == 3);
+
+    // Checking throw error when set denominator to 0
+    CHECK_THROWS(a.setDenominator(0));
 }
 
 
@@ -38,13 +51,24 @@ TEST_CASE("Checking the fraction is most reduced"){
 
     Fraction a(3,6);
 
-    CHECK(a == 3/6);
+    // ????????????? nned to be reduce right away or no?
+    CHECK(a.getNumerator() == 3);
+    CHECK(a.getDenominator() == 6);
 
     a.setNumerator(4);
 
-    CHECK(a == 2/3);
+    //fraction reduced because 4/6 can be reduced to 2/3
+    CHECK(a.getNumerator() == 2);
+    CHECK(a.getDenominator() == 3);
+
+    a.setDenominator(4);
+
+    //fraction reduced because 2/4 can be reduced to 1/2
+    CHECK(a.getNumerator() == 1);
+    CHECK(a.getDenominator() == 2);
 
 }
+
 
 TEST_CASE("Checking if operator + and == working successfully"){
 
