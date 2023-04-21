@@ -16,8 +16,8 @@ namespace ariel{
         if(d == 0){
             throw std::invalid_argument("Cant divide by 0");
         }
-        // this->numerator = numerator;
-        // this->denominator = denominator;
+        // this->numerator =n;
+        // this->denominator = d;
 
         int gcd = Fraction::gcd(this->numerator,this->denominator);
 
@@ -29,7 +29,7 @@ namespace ariel{
 
     Fraction::Fraction(float num){
 
-        this->numerator += num;
+        // this->numerator += num;
         
         
     }
@@ -51,6 +51,15 @@ namespace ariel{
 
     void Fraction::setNumerator(int num1){
         this->numerator = num1;
+
+        if(num1 != 0){
+
+            int gcd = Fraction::gcd(num1,this->denominator);
+
+            this->numerator = this->numerator/gcd;
+            this->denominator = this->denominator/gcd;
+        }
+
     }
     
     void Fraction::setDenominator(int num2){
@@ -58,6 +67,12 @@ namespace ariel{
             throw std::invalid_argument("cant divide by 0");
         }
         this->denominator = num2;
+
+        // checking if the fraction can be reduce
+        int gcd = Fraction::gcd(this->numerator,num2);
+
+        this->numerator = this->numerator/gcd;
+        this->denominator = this->denominator/gcd;
     }
 
     

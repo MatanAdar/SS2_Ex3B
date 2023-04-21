@@ -52,14 +52,14 @@ TEST_CASE("Checking the fraction is most reduced"){
     Fraction a(3,6);
 
     // ????????????? nned to be reduce right away or no?
-    CHECK(a.getNumerator() == 3);
-    CHECK(a.getDenominator() == 6);
+    CHECK(a.getNumerator() == 1);
+    CHECK(a.getDenominator() == 2);
 
     a.setNumerator(4);
 
     //fraction reduced because 4/6 can be reduced to 2/3
     CHECK(a.getNumerator() == 2);
-    CHECK(a.getDenominator() == 3);
+    CHECK(a.getDenominator() == 1);
 
     a.setDenominator(4);
 
@@ -75,15 +75,21 @@ TEST_CASE("Checking if operator + and == working successfully"){
     Fraction a(1,4);
     Fraction b(1,2);
 
-    CHECK(a+b == 3/4);
+    Fraction c = a+b;
 
-    CHECK(a+2.3 == 2.55);
+    CHECK(c.getNumerator() == 3);
+    CHECK(c.getDenominator() == 4);
 
-    Fraction c(1,2);
+    Fraction d = a + 2.3;
 
-    CHECK(b+c == 1);
+    CHECK(d.getNumerator() == 51);
+    CHECK(d.getDenominator() == 20);
 
-    CHECK(2.5+c == 3);
+    Fraction e(1,2);
+
+    CHECK(b+e == 1);
+
+    CHECK(2.5+e == 3);
 
 
 }
@@ -94,9 +100,11 @@ TEST_CASE("Checking if operator - and == working successfully"){
     Fraction a(1,4);
     Fraction b(1,2);
 
-    CHECK(a-b == -1/4);
+    Fraction result(-1,4);
 
-    CHECK(2.3-b == 1.8);
+    CHECK(a-b == result);
+
+    CHECK(2.3-b == Fraction(9,5));
 
     Fraction c(1,2);
 
@@ -111,20 +119,20 @@ TEST_CASE("Checking if operator * and == working successfully"){
     Fraction a(1,4);
     Fraction b(1,2);
 
-    CHECK(a*b == 1/8);
+    CHECK(a*b == Fraction(1,8));
 
     a.setNumerator(3);
     a.setDenominator(5);
 
-    CHECK(a*b == 3/10);
+    CHECK(a*b == Fraction(3,10));
 
-    CHECK(2.3*b == 1.15);
+    CHECK(2.3*b == Fraction(23,20));
 
     Fraction c(1,2);
 
-    CHECK(b*c == 1/4);
+    CHECK(b*c == Fraction(1,4));
 
-    CHECK(c*2.5 == 1.25);
+    CHECK(c*2.5 == Fraction(5,4));
 }
 
 
@@ -133,7 +141,7 @@ TEST_CASE("Checking if operator / and == working successfully"){
     Fraction a(1,4);
     Fraction b(1,2);
 
-    CHECK(a/b == 1/2);
+    CHECK(a/b == Fraction(1,2));
 
     CHECK(2.3/a == 0.575);
 
