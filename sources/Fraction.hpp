@@ -10,11 +10,13 @@ namespace ariel{
             int denominator;
         
         public:
-            // Fraction(){}
+            Fraction();
 
             Fraction(int numerator, int denominator);
 
             Fraction(float num);
+
+            int gcd(int nume, int den);
 
             int getNumerator();
 
@@ -27,30 +29,30 @@ namespace ariel{
 
             Fraction operator+ (Fraction& other_fraction);
 
-            float operator+ (float num);
+            Fraction operator+ (float num);
 
-            friend float operator+ (float num, Fraction& fraction);
+            friend Fraction operator+ (float num, Fraction& fraction);
 
 
             Fraction operator- (Fraction& other_fraction);
 
-            float operator- (float num);
+            Fraction operator- (float num);
 
-            friend float operator- (float num, Fraction& fraction);
+            friend Fraction operator- (float num, Fraction& fraction);
 
 
             Fraction operator* (Fraction& other_fraction);
 
-            float operator* (float num);
+            Fraction operator* (float num);
 
-            friend float operator* (float num, Fraction& fraction);
+            friend Fraction operator* (float num, Fraction& fraction);
 
 
             Fraction operator/ (Fraction& other_fraction);
 
-            float operator/ (float num);
+            Fraction operator/ (float num);
 
-            friend float operator/ (float num, Fraction& fraction);
+            friend Fraction operator/ (float num, Fraction& fraction);
 
 
             bool operator== (const Fraction& other_fraction) const;
@@ -63,13 +65,16 @@ namespace ariel{
 
             bool operator<= (const Fraction& other_fraction) const;
 
+
             const Fraction operator++ (int);
 
             Fraction& operator++ ();
 
+
             const Fraction operator--(int);
 
             Fraction& operator--();
+
 
             friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
 

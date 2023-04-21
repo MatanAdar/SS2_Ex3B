@@ -1,23 +1,44 @@
 #include "Fraction.hpp"
 #include <stdio.h>
+#include <iostream>
 
 using namespace std;
 
 /// @brief 
 namespace ariel{
 
-    // Fraction::Fraction(){
+    Fraction::Fraction(){
 
-    //     Fraction(this->numerator, this->denominator);
-    // }
+        cout << getNumerator() << "/" << getDenominator() << endl;
+    }
 
-    Fraction::Fraction(int numerator, int denominator){
-        this->numerator = numerator;
-        this->denominator = denominator;
+    Fraction::Fraction(int n, int d) : numerator(n),denominator(d){
+        if(d == 0){
+            throw std::invalid_argument("Cant divide by 0");
+        }
+        // this->numerator = numerator;
+        // this->denominator = denominator;
+
+        int gcd = Fraction::gcd(this->numerator,this->denominator);
+
+        this->numerator = this->numerator / gcd;
+        this->denominator = this->denominator / gcd;
+
+
     }
 
     Fraction::Fraction(float num){
 
+        this->numerator += num;
+        
+        
+    }
+
+    int Fraction::gcd(int nume, int den) {
+        if (den == 0) {
+            return nume;
+        }
+        return gcd(den, nume % den);
     }
 
     int Fraction::getNumerator(){
@@ -33,118 +54,223 @@ namespace ariel{
     }
     
     void Fraction::setDenominator(int num2){
+        if(num2 == 0){
+            throw std::invalid_argument("cant divide by 0");
+        }
         this->denominator = num2;
     }
 
     
 
     Fraction Fraction::operator+ (Fraction& fraction){
+        
+        int new_n = (this->getNumerator() * fraction.getDenominator()) + (fraction.getNumerator() * this->getDenominator());    
+        int new_d = (this->getDenominator() * fraction.getDenominator());
 
-        return Fraction(1,4);
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+           
+        return Fraction(new_n,new_d);
     }
 
-    float Fraction::operator+ (float num){
 
-        return 1;
+
+    Fraction Fraction::operator+ (float num){
+
+        // perform the float to fraction
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        int new_n = (this->getNumerator() * den_as_fraction) + (num_as_fraction * this->getDenominator());
+        int new_d = this->getDenominator() * den_as_fraction;
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float operator+ (float num, Fraction& fraction){
+    Fraction operator+ (float num, Fraction& fraction){
 
-        return 1;
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        return Fraction(num_as_fraction,den_as_fraction) + fraction;
     }
 
 
 
     Fraction Fraction::operator- (Fraction& fraction){
 
-        return Fraction(1,2);
+        int new_n = (this->getNumerator() * fraction.getDenominator()) - (fraction.getNumerator() * this->getDenominator());    
+        int new_d = (this->getDenominator() * fraction.getDenominator());
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float Fraction::operator- (float num){
+    Fraction Fraction::operator- (float num){
 
-        return 1;
+         // perform the float to fraction
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        int new_n = (this->getNumerator() * den_as_fraction) - (num_as_fraction * this->getDenominator());
+        int new_d = this->getDenominator() * den_as_fraction;
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float operator- (float num, Fraction& fraction){
+    Fraction operator- (float num, Fraction& fraction){
 
-        return 1;
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        return Fraction(num_as_fraction,den_as_fraction) - fraction;
     }
 
 
 
     Fraction Fraction::operator* (Fraction& fraction){
 
-        return Fraction(1,2);
+        int new_n = (this->getNumerator() * fraction.getNumerator());    
+        int new_d = (this->getDenominator() * fraction.getDenominator());
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float Fraction::operator* (float num){
+    Fraction Fraction::operator* (float num){
 
-        return 1;
+         // perform the float to fraction
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        int new_n = (this->getNumerator() * num_as_fraction);    
+        int new_d = (this->getDenominator() * den_as_fraction);
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float operator* (float num, Fraction& fraction){
+    Fraction operator* (float num, Fraction& fraction){
 
-        return 0;
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        return Fraction(num_as_fraction,den_as_fraction) * fraction;
     }
 
     
 
     Fraction Fraction::operator/ (Fraction& fraction){
 
-        return Fraction(1,4);
+        int new_n = (this->getNumerator() * fraction.getDenominator());
+        int new_d = (this->getDenominator() * fraction.getNumerator());
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float Fraction::operator/ (float num){
+    Fraction Fraction::operator/ (float num){
 
-        return 1;
+       // perform the float to fraction
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        int new_n = (this->getNumerator() * den_as_fraction);    
+        int new_d = (this->getDenominator() * num_as_fraction);
+
+        int gcd = Fraction::gcd(new_n,new_d);
+
+        new_n = new_n/gcd;
+        new_d = new_d/gcd;
+
+        return Fraction(new_n,new_d);
     }
 
-    float operator/ (float num, Fraction& fraction){
+    Fraction operator/ (float num, Fraction& fraction){
 
-        return 1;
+        int num_as_fraction = num*1000;
+        int den_as_fraction = 1000;
+
+        return Fraction(num_as_fraction,den_as_fraction) / fraction;
     }
 
 
 
-    bool Fraction::operator==(const Fraction& other_fraction) const{
+    bool Fraction::operator== (const Fraction& other_fraction) const{
 
-        return false;
+        return (this->numerator == other_fraction.numerator) && (this->denominator == other_fraction.denominator);
     }
 
 
     bool Fraction::operator> (const Fraction& other_fraction) const{
 
-        return false;
+        return (this->numerator > other_fraction.numerator) && (this->denominator > other_fraction.denominator);
     }
 
 
     bool Fraction::operator< (const Fraction& other_fraction) const{
 
-        return false;
+        return (this->numerator < other_fraction.numerator) && (this->denominator < other_fraction.denominator);
     }
 
 
     bool Fraction::operator>= (const Fraction& other_fraction) const{
 
-        return false;
+        return (this->numerator >= other_fraction.numerator) && (this->denominator >= other_fraction.denominator);
     }
 
 
     bool Fraction::operator<= (const Fraction& other_fraction) const{
 
-        return false;
+        return (this->numerator <= other_fraction.numerator) && (this->denominator <= other_fraction.denominator);
     }
 
 
     // postfix (n++)
     const Fraction Fraction::operator++ (int){
 
-        return Fraction(1,1);
+        Fraction cpy = *this;
+        *this = *this +1;
+
+        int gcd = Fraction::gcd(this->numerator,this->denominator);
+        this->numerator = this->numerator/gcd;
+        this->denominator = this->denominator /gcd;
+
+        return cpy;
     }
 
     //prefix (++n)
     Fraction& Fraction::operator++ (){
 
+        *this = *this + 1;
         return *this;
     }
 
@@ -153,12 +279,20 @@ namespace ariel{
     //postfix (n--)
     const Fraction Fraction::operator--(int){
 
-        return Fraction(1,1);
+        Fraction cpy = *this;
+        *this = *this - 1;
+
+        int gcd = Fraction::gcd(this->numerator,this->denominator);
+        this->numerator = this->numerator/gcd;
+        this->denominator = this->denominator /gcd;
+
+        return cpy;
     }
 
     //prefix (--n)
     Fraction& Fraction::operator--(){
 
+        *this = *this - 1;
         return *this;
     }
 
@@ -167,7 +301,8 @@ namespace ariel{
 
 
     std::ostream& operator<< (std::ostream& output, const Fraction& fraction){
-        return output;
+        cout << fraction.numerator << "/" << fraction.denominator;
+        return cout;
     }
 
     std::istream& operator>>(std::istream& input, Fraction& fraction){
@@ -176,3 +311,5 @@ namespace ariel{
 
 
 }
+
+
