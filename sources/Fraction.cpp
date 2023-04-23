@@ -40,7 +40,7 @@ namespace ariel{
     }
 
     void Fraction::reduce(){
-         if (this->denominator < 0) {
+        if (this->denominator < 0) {
             numerator = -numerator;
             denominator = -denominator;
         }
