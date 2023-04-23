@@ -87,9 +87,9 @@ TEST_CASE("Checking if operator + and == working successfully"){
 
     Fraction e(1,2);
 
-    CHECK(b+e == 1);
+    CHECK(b+e == Fraction(1,1));
 
-    CHECK(2.5+e == 3);
+    CHECK(2.5+e == Fraction(3,1));
 
 
 }
@@ -108,9 +108,9 @@ TEST_CASE("Checking if operator - and == working successfully"){
 
     Fraction c(1,2);
 
-    CHECK(b-c == 0);
+    CHECK(b-c == Fraction(0,1));
 
-    CHECK(c-2.5 == -2);
+    CHECK(c-2.5 == Fraction(-2,1));
 }
 
 
@@ -143,37 +143,39 @@ TEST_CASE("Checking if operator / and == working successfully"){
 
     CHECK(a/b == Fraction(1,2));
 
-    CHECK(2.3/a == 0.575);
+    CHECK(2.3/a == Fraction(46,5));
 
     Fraction c(1,2);
 
-    CHECK(b/c == 1);
+    CHECK(b/c == Fraction(1,1));
 
-    CHECK(c/2.5 == 1/5);
+    CHECK(c/2.5 == Fraction(1,5));
 }
 
 
 TEST_CASE("Checking if operator ++ and operator -- working successfully "){
 
-    Fraction a(1/2);
+    Fraction a(1,2);
     Fraction b(3,5);
 
+    CHECK(a++ == Fraction(1,2));
+
     Fraction c = a++;
-    CHECK(c == 1/2);
-    CHECK(a == 3/2);
+    CHECK(c == Fraction(3,2));
+    CHECK(a == Fraction(5,2));
 
     Fraction d = ++b;
-    CHECK(d == 8/5);
-    CHECK(b == 8/5);
+    CHECK(d == Fraction(8,5));
+    CHECK(b == Fraction(8,5));
 
 
     Fraction h = a--;
-    CHECK(h == 3/2);
-    CHECK(a ==1/2);
+    CHECK(h == Fraction(5,2));
+    CHECK(a == Fraction(3,2));
 
     Fraction k = --b;
-    CHECK(k == 3/5);
-    CHECK(b == 3/5);
+    CHECK(k == Fraction(3,5));
+    CHECK(b == Fraction(3,5));
 
 
 }

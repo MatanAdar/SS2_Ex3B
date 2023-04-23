@@ -24,13 +24,11 @@ namespace ariel{
         this->numerator = this->numerator / gcd;
         this->denominator = this->denominator / gcd;
 
-
     }
 
-    Fraction::Fraction(float num){
+    Fraction::Fraction(float num) : numerator(int(num*1000)) , denominator(1000){
 
-        // this->numerator += num;
-        
+        this->reduce();
         
     }
 
@@ -39,6 +37,16 @@ namespace ariel{
             return nume;
         }
         return gcd(den, nume % den);
+    }
+
+    void Fraction::reduce(){
+         if (this->denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+        int gcd = this->gcd(this->getNumerator(), this->getDenominator());
+        this->setNumerator(this->numerator / gcd);
+        this->setDenominator(this->denominator / gcd);
     }
 
     int Fraction::getNumerator(){
@@ -244,11 +252,34 @@ namespace ariel{
         return (this->numerator == other_fraction.numerator) && (this->denominator == other_fraction.denominator);
     }
 
+    bool Fraction::operator== (float num) const{
+
+        return *this == Fraction(num);
+    }
+
+    bool operator== (float num ,const Fraction& other_fraction){
+
+        return Fraction(num) == other_fraction;
+    }
+
+
+
 
     bool Fraction::operator> (const Fraction& other_fraction) const{
 
         return (this->numerator > other_fraction.numerator) && (this->denominator > other_fraction.denominator);
     }
+
+    bool Fraction::operator> (float num) const{
+
+        return *this > Fraction(num);
+    }
+
+    bool operator> (float num ,const Fraction& other_fraction){
+
+        return Fraction(num) > other_fraction;
+    }
+
 
 
     bool Fraction::operator< (const Fraction& other_fraction) const{
@@ -256,16 +287,48 @@ namespace ariel{
         return (this->numerator < other_fraction.numerator) && (this->denominator < other_fraction.denominator);
     }
 
+    bool Fraction::operator< (float num) const{
+
+        return *this < Fraction(num);
+    }
+
+    bool operator< (float num ,const Fraction& other_fraction){
+
+        return Fraction(num) < other_fraction;
+    }
+
+
 
     bool Fraction::operator>= (const Fraction& other_fraction) const{
 
         return (this->numerator >= other_fraction.numerator) && (this->denominator >= other_fraction.denominator);
     }
 
+    bool Fraction::operator>= (float num) const{
+
+        return *this >= Fraction(num);
+    }
+
+    bool operator>= (float num ,const Fraction& other_fraction){
+
+        return Fraction(num) >= other_fraction;
+    }
+
+
 
     bool Fraction::operator<= (const Fraction& other_fraction) const{
 
         return (this->numerator <= other_fraction.numerator) && (this->denominator <= other_fraction.denominator);
+    }
+
+    bool Fraction::operator<= (float num) const{
+
+        return *this <= Fraction(num);
+    }
+
+    bool operator<= (float num ,const Fraction& other_fraction){
+
+        return Fraction(num) <= other_fraction;
     }
 
 
@@ -275,9 +338,7 @@ namespace ariel{
         Fraction cpy = *this;
         *this = *this +1;
 
-        int gcd = Fraction::gcd(this->numerator,this->denominator);
-        this->numerator = this->numerator/gcd;
-        this->denominator = this->denominator /gcd;
+        this->reduce();
 
         return cpy;
     }
@@ -286,6 +347,9 @@ namespace ariel{
     Fraction& Fraction::operator++ (){
 
         *this = *this + 1;
+
+        this->reduce();
+
         return *this;
     }
 
@@ -297,9 +361,11 @@ namespace ariel{
         Fraction cpy = *this;
         *this = *this - 1;
 
-        int gcd = Fraction::gcd(this->numerator,this->denominator);
-        this->numerator = this->numerator/gcd;
-        this->denominator = this->denominator /gcd;
+        // int gcd = Fraction::gcd(this->numerator,this->denominator);
+        // this->numerator = this->numerator/gcd;
+        // this->denominator = this->denominator /gcd;
+
+        this->reduce();
 
         return cpy;
     }
@@ -308,6 +374,9 @@ namespace ariel{
     Fraction& Fraction::operator--(){
 
         *this = *this - 1;
+
+        this->reduce();
+
         return *this;
     }
 
@@ -346,5 +415,3 @@ namespace ariel{
 
 
 }
-
-

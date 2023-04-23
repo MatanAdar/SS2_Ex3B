@@ -8,6 +8,8 @@ namespace ariel{
         private:
             int numerator;
             int denominator;
+            int gcd(int nume, int den);
+            void reduce();
         
         public:
             Fraction();
@@ -15,8 +17,6 @@ namespace ariel{
             Fraction(int numerator, int denominator);
 
             Fraction(float num);
-
-            int gcd(int nume, int den);
 
             int getNumerator();
 
@@ -57,13 +57,37 @@ namespace ariel{
 
             bool operator== (const Fraction& other_fraction) const;
 
+            bool operator== (float num) const;
+
+            friend bool operator== (float num ,const Fraction& other_fraction);
+
+
             bool operator> (const Fraction& other_fraction) const;
+
+            bool operator> (float num) const;
+
+            friend bool operator> (float num ,const Fraction& other_fraction);
+
 
             bool operator< (const Fraction& other_fraction) const;
 
+            bool operator< (float num) const;
+
+            friend bool operator< (float num ,const Fraction& other_fraction);
+
+
             bool operator>= (const Fraction& other_fraction) const;
 
+            bool operator>= (float num) const;
+
+            friend bool operator>= (float num ,const Fraction& other_fraction);
+
+
             bool operator<= (const Fraction& other_fraction) const;
+
+            bool operator<= (float num) const;
+
+            friend bool operator<= (float num ,const Fraction& other_fraction) ;
 
 
             const Fraction operator++ (int);
