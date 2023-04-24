@@ -58,14 +58,18 @@ namespace ariel{
     }
 
     void Fraction::setNumerator(int num1){
-        this->numerator = num1;
 
         if(num1 != 0){
+            this->numerator = num1;
 
             int gcd = Fraction::gcd(num1,this->denominator);
 
             this->numerator = this->numerator/gcd;
             this->denominator = this->denominator/gcd;
+        }
+        else{
+            this->numerator = 0;
+            this->denominator = 1;
         }
 
     }

@@ -40,7 +40,8 @@ TEST_CASE("Checking set function change the Fraction"){
     a.setNumerator(0);
 
     CHECK(a.getNumerator() == 0);
-    CHECK(a.getDenominator() == 3);
+    CHECK(a.getDenominator() == 1);
+    CHECK(a == Fraction(0,1));
 
     // Checking throw error when set denominator to 0
     CHECK_THROWS(a.setDenominator(0));
