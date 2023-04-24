@@ -41,12 +41,12 @@ namespace ariel{
 
     void Fraction::reduce(){
         if (this->denominator < 0) {
-            numerator = -numerator;
-            denominator = -denominator;
+            this->setNumerator(-((this->getNumerator())));
+            this->setDenominator(-((this->getDenominator())));
         }
         int gcd = this->gcd(this->getNumerator(), this->getDenominator());
-        this->setNumerator(this->numerator / gcd);
-        this->setDenominator(this->denominator / gcd);
+        this->setNumerator(this->getNumerator() / gcd);
+        this->setDenominator(this->getDenominator() / gcd);
     }
 
     int Fraction::getNumerator(){
