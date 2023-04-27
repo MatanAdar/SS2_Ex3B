@@ -270,8 +270,14 @@ namespace ariel{
 
 
     bool Fraction::operator> (const Fraction& other_fraction) const{
+        
+        if(this->denominator == other_fraction.denominator){
+            return this->numerator > other_fraction.numerator || other_fraction.numerator > this->numerator;
+        }
+        else{
+            return(this->denominator < other_fraction.denominator);
+        }
 
-        return (this->numerator > other_fraction.numerator) && (this->denominator > other_fraction.denominator);
     }
 
     bool Fraction::operator> (float num) const{
@@ -288,7 +294,13 @@ namespace ariel{
 
     bool Fraction::operator< (const Fraction& other_fraction) const{
 
-        return (this->numerator < other_fraction.numerator) && (this->denominator < other_fraction.denominator);
+        if(this->denominator == other_fraction.denominator){
+            return this->numerator < other_fraction.numerator;
+        }
+        else{
+            return (this->denominator > other_fraction.denominator);
+        }
+
     }
 
     bool Fraction::operator< (float num) const{
@@ -305,7 +317,13 @@ namespace ariel{
 
     bool Fraction::operator>= (const Fraction& other_fraction) const{
 
-        return (this->numerator >= other_fraction.numerator) && (this->denominator >= other_fraction.denominator);
+        if(this->denominator == other_fraction.denominator){
+            return  this->numerator >= other_fraction.numerator;
+        }
+        else{
+            return (this->denominator <= other_fraction.denominator);
+        }
+
     }
 
     bool Fraction::operator>= (float num) const{
@@ -322,7 +340,13 @@ namespace ariel{
 
     bool Fraction::operator<= (const Fraction& other_fraction) const{
 
-        return (this->numerator <= other_fraction.numerator) && (this->denominator <= other_fraction.denominator);
+        if(this->denominator == other_fraction.denominator){
+            return this->numerator <= other_fraction.numerator;
+        }
+        else{  // need to check this in line 121 in test 1
+            return (this->denominator >= other_fraction.denominator);
+        }   
+
     }
 
     bool Fraction::operator<= (float num) const{
