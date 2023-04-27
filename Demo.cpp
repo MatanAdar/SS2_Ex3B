@@ -48,5 +48,12 @@ int main() {
         printf("not bigger\n");
     }
 
+    Fraction d(1, 5);
+    float e = 0.4; // Will be converted to 2/5
+    Fraction g = e + d;
+
+    cout << g.getNumerator() << endl;
+    cout << g.getDenominator() << endl;
+
 
 }
