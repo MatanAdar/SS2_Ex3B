@@ -8,10 +8,12 @@ using namespace std;
 
 namespace ariel{
 
-    Fraction::Fraction(){
+    Fraction::Fraction() : numerator(0) , denominator(1){
 
-        // cout << getNumerator() << "/" << getDenominator() << endl;
     }
+
+    // Fraction::Fraction(int numerator) : numerator(numerator), denominator(1){}
+
 
     Fraction::Fraction(int n, int d) : numerator(n),denominator(d){
         if(d == 0){
@@ -27,6 +29,32 @@ namespace ariel{
         this->reduce();
         
     }
+
+    // // copy constructor
+    // Fraction::Fraction(const Fraction& other) : numerator(other.numerator) , denominator(other.denominator){
+
+    // }
+
+    // Fraction::Fraction(Fraction&& other) noexcept {
+    //     // move other's data to this object
+    // }
+
+    // Fraction& Fraction::operator=(Fraction&& other) noexcept {
+    //     if (this != &other) {
+    //         // move other's data to this object
+    //     }
+    //     return *this;
+    // }
+
+
+    // Fraction& Fraction::operator=(const Fraction& other) {
+    //     if (this != &other) {
+    //         // copy other's data to this object
+    //     }
+    //     return *this;
+    // }
+
+
 
     int Fraction::gcd(int nume, int den) {
         if (den == 0) {
@@ -469,5 +497,7 @@ namespace ariel{
         return input;
     }
 
+    //destructor
+    // Fraction::~Fraction(){}
 
 }

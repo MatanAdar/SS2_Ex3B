@@ -14,9 +14,26 @@ namespace ariel{
         public:
             Fraction();
 
+            // Fraction(int numerator) : numerator(numerator) , denominator(1){}
+
             Fraction(int numerator, int denominator);
 
             Fraction(float num);
+
+            // // copy constructor
+            // Fraction(const Fraction& other);
+
+            // // move constructor
+            // Fraction(Fraction&& other) noexcept;
+
+            // // move assignment operator
+            // Fraction& operator=(Fraction&& other) noexcept;
+
+            // // copy assignment operator
+            // Fraction& operator=(const Fraction& other);
+
+
+
 
             int getNumerator() const{
                 return numerator;
@@ -108,16 +125,8 @@ namespace ariel{
 
             friend std::istream& operator>>(std::istream& input, Fraction& fraction);
 
-
-            //Assignment Operator
-            Fraction& operator=(const Fraction& other){
-                if(this != &other){
-                    this->numerator = other.numerator;
-                    this->denominator = other.denominator;
-                }
-                reduce();
-                return *this;
-            }
+            //destructor
+            // ~Fraction();
     };
 }
 
