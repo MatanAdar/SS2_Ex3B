@@ -272,7 +272,12 @@ namespace ariel{
             return this->numerator > other_fraction.numerator || other_fraction.numerator > this->numerator;
         }
         else{
-            return(this->denominator < other_fraction.denominator);
+            // ???????????????
+            int comman_d = this->denominator*other_fraction.denominator;
+            int new_this_nume = this->numerator * other_fraction.denominator;
+            int new_other_nume = other_fraction.numerator * this->denominator;
+           
+            return new_this_nume > new_other_nume;
         }
 
     }
@@ -296,7 +301,12 @@ namespace ariel{
             return this->numerator < other_fraction.numerator;
         }
         else{
-            return (this->denominator > other_fraction.denominator);
+            // ????????????????
+            int comman_d = this->denominator*other_fraction.denominator;
+            int new_this_nume = this->numerator * other_fraction.denominator;
+            int new_other_nume = other_fraction.numerator * this->denominator;
+           
+            return new_this_nume < new_other_nume;
         }
 
     }
@@ -320,7 +330,12 @@ namespace ariel{
             return  this->numerator >= other_fraction.numerator;
         }
         else{
-            return (this->numerator >= other_fraction.numerator) && (this->denominator >= other_fraction.denominator);
+            // ????????????????????
+            int comman_d = this->denominator*other_fraction.denominator;
+            int new_this_nume = this->numerator * other_fraction.denominator;
+            int new_other_nume = other_fraction.numerator * this->denominator;
+           
+            return new_this_nume >= new_other_nume;
         }
 
     }
@@ -343,8 +358,13 @@ namespace ariel{
         if(this->denominator == other_fraction.denominator){
             return this->numerator <= other_fraction.numerator;
         }
-        else{  // need to check this in line 121 in test 1
-            return (this->numerator <= other_fraction.numerator) && (this->denominator <= other_fraction.denominator);
+        else{ 
+            // ???????????????????
+            int comman_d = this->denominator*other_fraction.denominator;
+            int new_this_nume = this->numerator * other_fraction.denominator;
+            int new_other_nume = other_fraction.numerator * this->denominator;
+           
+            return new_this_nume <= new_other_nume;
         }   
 
     }
