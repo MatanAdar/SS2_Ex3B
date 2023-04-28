@@ -359,7 +359,7 @@ namespace ariel{
             return this->numerator <= other_fraction.numerator;
         }
         else{ 
-            // ???????????????????
+            // ??????????????????? new numerators after common ground
             int comman_d = this->denominator*other_fraction.denominator;
             int new_this_nume = this->numerator * other_fraction.denominator;
             int new_other_nume = other_fraction.numerator * this->denominator;
