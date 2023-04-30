@@ -73,48 +73,48 @@ namespace ariel{
         this->denominator = this->getDenominator() / gcd;
     }
 
-    // int Fraction::getNumerator() const{
-    //     return this->numerator;
-    // }
-
-    // int Fraction::getDenominator() const{
-    //     return this->denominator;
-    // }
-
-    void Fraction::setNumerator(int num1){
-
-        if(num1 != 0){
-            this->numerator = num1;
-
-            int gcd = Fraction::gcd(num1,this->denominator);
-
-            this->numerator = this->numerator/gcd;
-            this->denominator = this->denominator/gcd;
-        }
-        else{
-            this->numerator = 0;
-            this->denominator = 1;
-        }
-
+    int Fraction::getNumerator() const{
+        return this->numerator;
     }
+
+    int Fraction::getDenominator() const{
+        return this->denominator;
+    }
+
+    // void Fraction::setNumerator(int num1){
+
+    //     if(num1 != 0){
+    //         this->numerator = num1;
+
+    //         int gcd = Fraction::gcd(num1,this->denominator);
+
+    //         this->numerator = this->numerator/gcd;
+    //         this->denominator = this->denominator/gcd;
+    //     }
+    //     else{
+    //         this->numerator = 0;
+    //         this->denominator = 1;
+    //     }
+
+    // }
     
-    void Fraction::setDenominator(int num2){
-        if(num2 == 0){
-            throw std::invalid_argument("cant divide by 0");
-        }
-        if(num2 < 0){
-            this->numerator = (-1*(this->numerator));
-            this->denominator = (-1*(this->denominator));
+    // void Fraction::setDenominator(int num2){
+    //     if(num2 == 0){
+    //         throw std::invalid_argument("cant divide by 0");
+    //     }
+    //     if(num2 < 0){
+    //         this->numerator = (-1*(this->numerator));
+    //         this->denominator = (-1*(this->denominator));
 
-        }
-        this->denominator = num2;
+    //     }
+    //     this->denominator = num2;
 
-        // checking if the fraction can be reduce
-        int gcd = Fraction::gcd(this->numerator,num2);
+    //     // checking if the fraction can be reduce
+    //     int gcd = Fraction::gcd(this->numerator,num2);
 
-        this->numerator = this->numerator/gcd;
-        this->denominator = this->denominator/gcd;
-    }
+    //     this->numerator = this->numerator/gcd;
+    //     this->denominator = this->denominator/gcd;
+    // }
 
     
 
@@ -131,7 +131,7 @@ namespace ariel{
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator+ (const Fraction& fraction , float num){
+    Fraction operator+ (const Fraction& fraction ,const float num){
 
         Fraction temp(num*1000,1000);
 
@@ -148,7 +148,7 @@ namespace ariel{
         return fraction + temp;
     }
 
-    Fraction operator+(float num, const Fraction &fraction)
+    const Fraction operator+(const float num, const Fraction &fraction)
     {
 
         int num_as_fraction = num*1000;
@@ -172,7 +172,7 @@ namespace ariel{
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator- (const Fraction& fraction , float num){
+    Fraction operator- (const Fraction& fraction ,const float num){
 
         Fraction temp(num*1000, 1000);
 
@@ -187,7 +187,12 @@ namespace ariel{
         return fraction - temp;
     }
 
-    Fraction operator- (float num, const Fraction& fraction){
+    // const Fraction operator-(float num, const Fraction &fraction)
+    // {
+    //     return Fraction();
+    // }
+
+    const Fraction operator- (const float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -210,7 +215,7 @@ namespace ariel{
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator* (const Fraction& fraction , float num){
+    Fraction operator* (const Fraction& fraction , const float num){
 
          // perform the float to fraction
         Fraction temp(num*1000 , 1000);
@@ -226,7 +231,7 @@ namespace ariel{
         return fraction * temp;
     }
 
-    Fraction operator* (float num, const Fraction& fraction){
+    Fraction operator* (const float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -234,10 +239,14 @@ namespace ariel{
         return Fraction(num_as_fraction,den_as_fraction) * fraction;
     }
 
-    
+
 
     Fraction Fraction::operator/ (const Fraction& fraction) const{
 
+        if(fraction.numerator == 0){
+            throw std::runtime_error("Cant denominator be 0");
+        }
+        
         int new_n = (this->getNumerator() * fraction.getDenominator());
         int new_d = (this->getDenominator() * fraction.getNumerator());
 
@@ -249,7 +258,7 @@ namespace ariel{
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator/ (const Fraction& fraction , float num){
+    Fraction operator/ (const Fraction& fraction , const float num){
 
        // perform the float to fraction
         Fraction temp(num*1000 , 1000);
@@ -265,7 +274,7 @@ namespace ariel{
         return fraction / temp;
     }
 
-    Fraction operator/ (float num, const Fraction& fraction){
+    Fraction operator/ (const float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -277,15 +286,25 @@ namespace ariel{
 
 
     bool Fraction::operator== (const Fraction& other_fraction) const{
+        
+        if(this->numerator == other_fraction.numerator && this->denominator == other_fraction.denominator){
+            return true;
+        }
 
-        return (this->numerator == other_fraction.numerator) && (this->denominator == other_fraction.denominator);
-    }
+        float thousand = 1000.0;
+        int fl1 = (int)(((float)this->numerator / (float)this->denominator) * thousand);
+        int fl2 = (int)(((float)other_fraction.numerator / (float)other_fraction.denominator) * thousand);
 
-    bool operator== (const Fraction& fraction , float num){
+        return fl1 == fl2;
+
+        }
+
+    bool operator== (const Fraction& fraction , const float num){
+
         return fraction == Fraction(num);
     }
 
-    bool operator== (float num ,const Fraction& other_fraction){
+    bool operator== (const float num ,const Fraction& other_fraction){
 
         return Fraction(num) == other_fraction;
     }
@@ -297,7 +316,7 @@ namespace ariel{
     bool Fraction::operator> (const Fraction& other_fraction) const{
         
         if(this->denominator == other_fraction.denominator){
-            return this->numerator > other_fraction.numerator || other_fraction.numerator > this->numerator;
+            return this->numerator > other_fraction.numerator;
         }
         else{
             // ???????????????
@@ -471,24 +490,19 @@ namespace ariel{
 
         int numerator;
         int denominator;
-        char space_in_input;
+        // char separator_in_input;
 
-        input >> numerator;
+        // input >> numerator >> denominator ;
 
-        input >> space_in_input;
+        // if(separator_in_input == ','  &&  denominator != 0){
+            
+        //     fraction = Fraction(numerator,denominator);
+        //     // fraction.setNumerator(numerator);
+        //     // fraction.setDenominator(denominator);
+        // }
+        if((input >> numerator >> denominator) && denominator != 0){
 
-        input >> denominator;
-
-        cout << space_in_input << endl;
-
-        if(space_in_input == ','  &&  denominator != 0){
-
-            fraction.setNumerator(numerator);
-            fraction.setDenominator(denominator);
-        }
-        else if(space_in_input == ' ' && denominator != 0){
-            fraction.setNumerator(numerator);
-            fraction.setDenominator(denominator);
+            fraction = Fraction(numerator,denominator);
         }
         else{
             throw std::runtime_error("Input isnt valid");
