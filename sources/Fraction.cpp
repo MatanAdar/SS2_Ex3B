@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <algorithm>
+#include <limits.h>
+#include <stdexcept>
+#include <cmath>
 
 using namespace std;
 
@@ -116,22 +119,43 @@ namespace ariel{
     //     this->denominator = this->denominator/gcd;
     // }
 
+
+    void Fraction::check_Overflow(long numerator,long denominator) const{
+
+        if(numerator > INT_MAX || numerator < INT_MIN){
+            throw std::overflow_error("Numerator are larger then max int or smaller then min int");
+        }
+        else if(denominator > INT_MAX || denominator < INT_MIN){
+            throw std::overflow_error("Denominator are larger then max int or smaller then min int");
+        }
+        else{
+            return;
+        }
+    }
+
+
     
 
-    Fraction Fraction::operator+ (const Fraction& fraction) const{
+    Fraction Fraction::operator+(const Fraction &other_fraction) const{
+
+        long new_n1 = (long)(this->getNumerator() * other_fraction.getDenominator()) + (other_fraction.getNumerator() * this->getDenominator());    
+        long new_d1 = (long)(this->getDenominator() * other_fraction.getDenominator());
+
+        check_Overflow(new_n1 , new_d1);
+
+        int new_n = (int)(new_n1);
+        int new_d = (int)(new_d1);
         
-        int new_n = (this->getNumerator() * fraction.getDenominator()) + (fraction.getNumerator() * this->getDenominator());    
-        int new_d = (this->getDenominator() * fraction.getDenominator());
 
-        int gcd = __gcd(new_n,new_d);
+        // int gcd = __gcd(new_n,new_d);
 
-        new_n = new_n/gcd;
-        new_d = new_d/gcd;
+        // new_n = new_n/gcd;
+        // new_d = new_d/gcd;
            
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator+ (const Fraction& fraction ,const float num){
+    Fraction Fraction::operator+ (float num){
 
         Fraction temp(num*1000,1000);
 
@@ -145,10 +169,10 @@ namespace ariel{
         // new_n = new_n/gcd;
         // new_d = new_d/gcd;
 
-        return fraction + temp;
+        return *this + temp;
     }
 
-    const Fraction operator+(const float num, const Fraction &fraction)
+    Fraction operator+(float num, const Fraction &fraction)
     {
 
         int num_as_fraction = num*1000;
@@ -161,18 +185,23 @@ namespace ariel{
 
     Fraction Fraction::operator- (const Fraction& fraction) const{
 
-        int new_n = (this->getNumerator() * fraction.getDenominator()) - (fraction.getNumerator() * this->getDenominator());    
-        int new_d = (this->getDenominator() * fraction.getDenominator());
+        long new_n1 = (long)(this->getNumerator() * fraction.getDenominator()) - (long)(fraction.getNumerator() * this->getDenominator());    
+        long new_d1 = (long)(this->getDenominator() * fraction.getDenominator());
 
-        int gcd = __gcd(new_n,new_d);
+       check_Overflow(new_n1 , new_d1);
 
-        new_n = new_n/gcd;
-        new_d = new_d/gcd;
+        int new_n = (int)(new_n1);
+        int new_d = (int)(new_d1);
+
+        // int gcd = __gcd(new_n,new_d);
+
+        // new_n = new_n/gcd;
+        // new_d = new_d/gcd;
 
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator- (const Fraction& fraction ,const float num){
+    Fraction Fraction::operator- (float num){
 
         Fraction temp(num*1000, 1000);
 
@@ -184,7 +213,7 @@ namespace ariel{
         // new_n = new_n/gcd;
         // new_d = new_d/gcd;
 
-        return fraction - temp;
+        return *this - temp;
     }
 
     // const Fraction operator-(float num, const Fraction &fraction)
@@ -192,7 +221,7 @@ namespace ariel{
     //     return Fraction();
     // }
 
-    const Fraction operator- (const float num, const Fraction& fraction){
+    Fraction operator- (float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -204,18 +233,23 @@ namespace ariel{
 
     Fraction Fraction::operator* (const Fraction& fraction) const{
 
-        int new_n = (this->getNumerator() * fraction.getNumerator());    
-        int new_d = (this->getDenominator() * fraction.getDenominator());
+        long new_n1 = ((long)this->getNumerator() * (long)fraction.getNumerator());    
+        long new_d1 = ((long)this->getDenominator() * (long)fraction.getDenominator());
 
-        int gcd = __gcd(new_n,new_d);
+        check_Overflow(new_n1 , new_d1);
 
-        new_n = new_n/gcd;
-        new_d = new_d/gcd;
+        int new_n = (int)(new_n1);    
+        int new_d = (int)(new_d1);
+
+        // int gcd = __gcd(new_n,new_d);
+
+        // new_n = new_n/gcd;
+        // new_d = new_d/gcd;
 
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator* (const Fraction& fraction , const float num){
+    Fraction Fraction::operator* (float num){
 
          // perform the float to fraction
         Fraction temp(num*1000 , 1000);
@@ -228,10 +262,10 @@ namespace ariel{
         // new_n = new_n/gcd;
         // new_d = new_d/gcd;
 
-        return fraction * temp;
+        return *this * temp;
     }
 
-    Fraction operator* (const float num, const Fraction& fraction){
+    Fraction operator* (float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -247,18 +281,22 @@ namespace ariel{
             throw std::runtime_error("Cant denominator be 0");
         }
         
-        int new_n = (this->getNumerator() * fraction.getDenominator());
-        int new_d = (this->getDenominator() * fraction.getNumerator());
+        long new_n1 = ((long)this->getNumerator() * fraction.getDenominator());
+        long new_d1 = ((long)this->getDenominator() * fraction.getNumerator());
 
-        int gcd = __gcd(new_n,new_d);
+        check_Overflow(new_n1 , new_d1);
 
-        new_n = new_n/gcd;
-        new_d = new_d/gcd;
+        int new_n = (int)(new_n1);
+        int new_d = (int)(new_d1);
 
         return Fraction(new_n,new_d);
     }
 
-    Fraction operator/ (const Fraction& fraction , const float num){
+    Fraction Fraction::operator/ (float num){
+
+        if(num == 0){
+            throw std::runtime_error("Cant denominator be 0");
+        }
 
        // perform the float to fraction
         Fraction temp(num*1000 , 1000);
@@ -271,10 +309,10 @@ namespace ariel{
         // new_n = new_n/gcd;
         // new_d = new_d/gcd;
 
-        return fraction / temp;
+        return *this / temp;
     }
 
-    Fraction operator/ (const float num, const Fraction& fraction){
+    Fraction operator/ (float num, const Fraction& fraction){
 
         int num_as_fraction = num*1000;
         int den_as_fraction = 1000;
@@ -299,12 +337,12 @@ namespace ariel{
 
         }
 
-    bool operator== (const Fraction& fraction , const float num){
+    bool Fraction::operator== (float num){
 
-        return fraction == Fraction(num);
+        return *this == Fraction(num);
     }
 
-    bool operator== (const float num ,const Fraction& other_fraction){
+    bool operator== (float num ,const Fraction& other_fraction){
 
         return Fraction(num) == other_fraction;
     }
@@ -329,16 +367,16 @@ namespace ariel{
 
     }
 
-    bool operator> (const Fraction& fraction , float num){
+    bool Fraction::operator> (float num){
 
-        return fraction > Fraction(num);
+        return *this > Fraction(num);
     }
 
-    bool operator> (float num ,const Fraction& other_fraction){
+    bool operator>(float num, const Fraction &other_fraction)
+    {
 
         return Fraction(num) > other_fraction;
     }
-
 
 
 
@@ -358,9 +396,9 @@ namespace ariel{
 
     }
 
-    bool operator< (const Fraction& fraction , float num){
+    bool Fraction::operator< (float num){
 
-        return fraction < Fraction(num);
+        return *this < Fraction(num);
     }
 
     bool operator< (float num ,const Fraction& other_fraction){
@@ -387,9 +425,9 @@ namespace ariel{
 
     }
 
-    bool operator>= (const Fraction& fraction , float num){
+    bool Fraction::operator>= (float num){
 
-        return fraction >= Fraction(num);
+        return *this >= Fraction(num);
     }
 
     bool operator>= (float num ,const Fraction& other_fraction){
@@ -416,9 +454,9 @@ namespace ariel{
 
     }
 
-    bool operator<= (const Fraction& fraction , float num){
+    bool Fraction::operator<= (float num){
 
-        return fraction <= Fraction(num);
+        return *this <= Fraction(num);
     }
 
     bool operator<= (float num ,const Fraction& other_fraction){
