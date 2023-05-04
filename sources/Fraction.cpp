@@ -304,7 +304,7 @@ namespace ariel{
             return this->numerator > other_fraction.numerator;
         }
         else{
-            int common_d = this->denominator*other_fraction.denominator;
+            // get the numes of each one of the fraction to be with common denominator
             int new_this_nume = this->numerator * other_fraction.denominator;
             int new_other_nume = other_fraction.numerator * this->denominator;
 
@@ -333,7 +333,7 @@ namespace ariel{
             return this->numerator < other_fraction.numerator;
         }
         else{
-            int common_d = this->denominator*other_fraction.denominator;
+            // get the numes of each one of the fraction to be with common denominator
             int new_this_nume = this->numerator * other_fraction.denominator;
             int new_other_nume = other_fraction.numerator * this->denominator;
 
@@ -362,7 +362,7 @@ namespace ariel{
             return  this->numerator >= other_fraction.numerator;
         }
         else{
-            int common_d = this->denominator*other_fraction.denominator;
+            // get the numes of each one of the fraction to be with common denominator
             int new_this_nume = this->numerator * other_fraction.denominator;
             int new_other_nume = other_fraction.numerator * this->denominator;
 
@@ -391,7 +391,7 @@ namespace ariel{
             return this->numerator <= other_fraction.numerator;
         }
         else{ 
-            int common_d = this->denominator*other_fraction.denominator;
+            // get the numes of each one of the fraction to be with common denominator
             int new_this_nume = this->numerator * other_fraction.denominator;
             int new_other_nume = other_fraction.numerator * this->denominator;
 

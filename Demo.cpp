@@ -34,26 +34,4 @@ int main() {
     else cout << " a is smaller than 1.1" << endl;
 
 
-    Fraction a1(1, 2);
-    Fraction b1(1, 4);
-
-    cout << a1 << endl;
-
-    cout << b1 << endl;
-
-    if (a1 < b1){
-        printf("hii\n");
-    }
-    else{
-        printf("not bigger\n");
-    }
-
-    Fraction d(1, 5);
-    float e = 0.4; // Will be converted to 2/5
-    Fraction g = e + d;
-
-    cout << g.getNumerator() << endl;
-    cout << g.getDenominator() << endl;
-
-
 }
