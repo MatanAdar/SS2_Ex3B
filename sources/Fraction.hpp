@@ -60,6 +60,13 @@ namespace ariel{
             friend bool operator== (float num , const Fraction& other_fraction);
 
 
+            bool operator!= (const Fraction& other_fraction) const;
+
+            bool operator!= (float num);
+
+            friend bool operator!= (float num , const Fraction& other_fraction);
+
+
             bool operator> (const Fraction& other_fraction) const;
 
             bool operator> (float num);

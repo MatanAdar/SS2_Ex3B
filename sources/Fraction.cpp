@@ -99,7 +99,7 @@ namespace ariel{
     }
 
     Fraction operator+(float num, const Fraction &fraction){
-        
+
         return Fraction(num) + fraction;
     }
 
@@ -223,6 +223,21 @@ namespace ariel{
     }
 
 
+
+    bool Fraction::operator!= (const Fraction& other_fraction) const{
+
+        return !(*this == other_fraction);
+    }
+
+    bool Fraction::operator!= (float num){
+
+        return !(*this == Fraction(num));
+    }
+
+    bool operator!= (float num , const Fraction& other_fraction){
+
+        return !(Fraction(num) == other_fraction);
+    }
 
 
 
