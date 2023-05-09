@@ -93,19 +93,13 @@ namespace ariel{
     Fraction Fraction::operator+ (float num){
 
         // perform the float to fraction
-        //Fraction temp(num*1000,1000);
         Fraction temp(num);
 
         return *this + temp;
     }
 
-    Fraction operator+(float num, const Fraction &fraction)
-    {
-
-        int num_as_fraction = num*1000;
-        int den_as_fraction = 1000;
-
-        //return Fraction(num_as_fraction,den_as_fraction) + fraction;
+    Fraction operator+(float num, const Fraction &fraction){
+        
         return Fraction(num) + fraction;
     }
 
@@ -127,7 +121,6 @@ namespace ariel{
     Fraction Fraction::operator- (float num){
 
         // perform the float to fraction
-        //Fraction temp(num*1000, 1000);
         Fraction temp(num);
 
         return *this - temp;
@@ -135,10 +128,6 @@ namespace ariel{
 
     Fraction operator- (float num, const Fraction& fraction){
 
-        int num_as_fraction = num*1000;
-        int den_as_fraction = 1000;
-
-        //return Fraction(num_as_fraction,den_as_fraction) - fraction;
         return Fraction(num) - fraction;
     }
 
@@ -160,7 +149,6 @@ namespace ariel{
     Fraction Fraction::operator* (float num){
 
         // perform the float to fraction
-        //Fraction temp(num*1000 , 1000);
         Fraction temp(num);
 
         return *this * temp;
@@ -168,10 +156,6 @@ namespace ariel{
 
     Fraction operator* (float num, const Fraction& fraction){
 
-        int num_as_fraction = num*1000;
-        int den_as_fraction = 1000;
-
-        //return Fraction(num_as_fraction,den_as_fraction) * fraction;
         return Fraction(num) * fraction;
     }
 
@@ -202,17 +186,13 @@ namespace ariel{
         }
 
        // perform the float to fraction
-        Fraction temp(num*1000 , 1000);
+        Fraction temp(num);
 
         return *this / temp;
     }
 
     Fraction operator/ (float num, const Fraction& fraction){
 
-        int num_as_fraction = num*1000;
-        int den_as_fraction = 1000;
-
-        //return Fraction(num_as_fraction,den_as_fraction) / fraction;
         return Fraction(num) / fraction;
     }
 
